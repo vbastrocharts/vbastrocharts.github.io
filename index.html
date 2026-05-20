@@ -1233,11 +1233,11 @@ const WORKER_URL = 'https://vbastrocharts-mailer.chihchen11-chen.workers.dev';
 
 /* ── Product & Bundle Data ── */
 const ORDER_PRODUCTS = [
-  { id:'P6', name:'外行星百年甘特圖',         price:680,  bundles:['B2'] },
-  { id:'P7', name:'本年視角百年甘特圖',        price:680,  bundles:['B2'] },
-  { id:'P1', name:'年度行運 ✦ 四視角甘特圖',   bundles:['B2'],
+  { id:'P6', name:'外行星百年甘特圖',         price:680,  bundles:['B2'], hasTheme:true },
+  { id:'P7', name:'本年視角百年甘特圖',        price:680,  bundles:['B2'], hasTheme:true },
+  { id:'P1', name:'年度行運 ✦ 四視角甘特圖',   bundles:['B2'], hasTheme:true,
     tiers:[{label:'5Y',price:460},{label:'10Y',price:770},{label:'15Y',price:1000}] },
-  { id:'P2', name:'太陽回歸 ✦ 三視角雙相位',   bundles:['B1'],
+  { id:'P2', name:'太陽回歸 ✦ 三視角雙相位',   bundles:['B1'], hasTheme:true,
     tiers:[{label:'10Y',price:380},{label:'20Y',price:580},{label:'50Y',price:920},{label:'100Y',price:1200}] },
   { id:'P3', name:'太陽回歸 ✦ 百年資料庫',     price:700,  bundles:['B1'] },
   { id:'P4', name:'百年太陽回歸 × 本命相位總覽', price:460, bundles:['B1'] },
@@ -1253,7 +1253,7 @@ const BUNDLES = {
 
 /* ── State ── */
 const sel = {};   // { pid: { selected, tierIdx } }
-ORDER_PRODUCTS.forEach(p => sel[p.id] = { selected:false, tierIdx: p.tiers ? 0 : null });
+ORDER_PRODUCTS.forEach(p => sel[p.id] = { selected:false, tierIdx: p.tiers ? 0 : null, theme: p.hasTheme ? '' : null });
 
 /* ── Build product list ── */
 function buildProdList() {
@@ -1289,6 +1289,18 @@ function buildProdList() {
       });
       item.appendChild(tiersDiv);
     }
+
+    if (p.hasTheme) {
+      const themeDiv = document.createElement('div');
+      themeDiv.id = 'theme-' + p.id;
+      themeDiv.style.cssText = 'display:none; padding:8px 12px 10px; gap:8px; display:none; flex-direction:row;';
+      themeDiv.innerHTML = `
+        <span style="font-size:11px; color:#7888a0; align-self:center; white-space:nowrap;">版本</span>
+        <button type="button" id="theme-${p.id}-dark"  onclick="event.stopPropagation();selectProdTheme('${p.id}','dark')"  style="flex:1;padding:6px 4px;border:1px solid #c0c8dc;border-radius:2px;background:#f4f6fb;color:#1e2d4a;font-size:11px;cursor:pointer;">深色版 Dark</button>
+        <button type="button" id="theme-${p.id}-light" onclick="event.stopPropagation();selectProdTheme('${p.id}','light')" style="flex:1;padding:6px 4px;border:1px solid #c0c8dc;border-radius:2px;background:#f4f6fb;color:#1e2d4a;font-size:11px;cursor:pointer;">淺色版 Light</button>
+      `;
+      item.appendChild(themeDiv);
+    }
     list.appendChild(item);
   });
 }
@@ -1299,6 +1311,9 @@ function toggleProd(pid) {
   item.classList.toggle('selected', sel[pid].selected);
   const tiersDiv = document.getElementById('tiers-' + pid);
   if (tiersDiv) tiersDiv.style.display = sel[pid].selected ? 'flex' : 'none';
+  const themeDiv = document.getElementById('theme-' + pid);
+  if (themeDiv) themeDiv.style.display = sel[pid].selected ? 'flex' : 'none';
+  if (!sel[pid].selected && sel[pid].theme !== null) sel[pid].theme = '';
   updateTotal();
 }
 
@@ -1307,6 +1322,16 @@ function selectTier(pid, idx) {
   const tiersDiv = document.getElementById('tiers-' + pid);
   tiersDiv.querySelectorAll('.prod-tier-btn').forEach((b, i) => b.classList.toggle('selected', i === idx));
   updateTotal();
+}
+
+function selectProdTheme(pid, t) {
+  sel[pid].theme = t;
+  const dark  = document.getElementById(`theme-${pid}-dark`);
+  const light = document.getElementById(`theme-${pid}-light`);
+  const on  = 'flex:1;padding:6px 4px;border:1px solid #C9A84C;border-radius:2px;background:#f4f0e8;color:#1A2744;font-size:11px;cursor:pointer;font-weight:500;';
+  const off = 'flex:1;padding:6px 4px;border:1px solid #c0c8dc;border-radius:2px;background:#f4f6fb;color:#1e2d4a;font-size:11px;cursor:pointer;';
+  dark.setAttribute('style',  t === 'dark'  ? on : off);
+  light.setAttribute('style', t === 'light' ? on : off);
 }
 
 function getPrice(pid) {
@@ -1426,6 +1451,15 @@ async function submitOrder() {
   const country = document.getElementById('f_country').value.trim();
   const notes   = document.getElementById('f_notes').value.trim() || '—';
 
+  // 驗證有深淺版的商品必須選版本
+  const themeProds = ORDER_PRODUCTS.filter(p => sel[p.id].selected && p.hasTheme && !sel[p.id].theme);
+  if (themeProds.length > 0) {
+    status.className = 'form-status error';
+    status.textContent = `請為「${themeProds[0].name}」選擇深色版或淺色版。`;
+    document.getElementById('theme-' + themeProds[0].id).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
   if (!name || !email || !date || !time || !city || !country) {
     status.className = 'form-status error';
     status.textContent = '請填寫所有必填欄位。/ Please fill in all required fields.';
@@ -1439,6 +1473,7 @@ async function submitOrder() {
     total += price;
     let label = p.name;
     if (p.tiers) label += ` (${p.tiers[sel[p.id].tierIdx].label})`;
+    if (p.hasTheme) label += ` [${sel[p.id].theme === 'dark' ? '深色版' : '淺色版'}]`;
     return `${label}：NT$${price.toLocaleString()}`;
   });
   const product = productLines.join('\n');
