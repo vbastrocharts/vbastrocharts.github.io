@@ -331,7 +331,6 @@
       .card.selected::after { opacity: 1; }
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -760,7 +759,7 @@
       <div class="privacy-section">
         <p class="privacy-section-title">資料的保存與保護</p>
         <p class="privacy-section-text">您的出生資料與聯絡資訊僅由 VBAstroCharts 製作者個人持有，不會出售、出租或以任何形式提供給第三方。</p>
-        <p class="privacy-section-text">本站使用 EmailJS 處理訂單表單的電子郵件傳送，相關服務請參閱 EmailJS 的隱私政策。</p>
+        <p class="privacy-section-text">本站使用 Brevo 處理訂單表單的電子郵件傳送，相關服務請參閱 Brevo 的隱私政策。</p>
       </div>
 
       <div class="privacy-section">
@@ -1229,12 +1228,8 @@ document.addEventListener('keydown', e => {
 </div>
 
 <script>
-/* ── EmailJS ── */
-const EMAILJS_PUBLIC_KEY  = '6zteUithXdvtFVQL8';
-const EMAILJS_SERVICE_ID  = 'service_m0zilu1';
-const EMAILJS_TMPL_OWNER  = 'template_vqpawek';
-const EMAILJS_TMPL_CLIENT = 'template_h5qzuxi';
-emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+/* ── Cloudflare Worker ── */
+const WORKER_URL = 'https://vbastrocharts-mailer.chihchen11-chen.workers.dev';
 
 /* ── Product & Bundle Data ── */
 const ORDER_PRODUCTS = [
@@ -1453,10 +1448,13 @@ async function submitOrder() {
   btn.textContent = '傳送中… / Sending…';
   status.className = 'form-status';
 
-  const params = { name, email, date, time, place: city + ', ' + country, product, total: totalStr, notes };
   try {
-    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TMPL_OWNER,  params);
-    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TMPL_CLIENT, params);
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, date, time, place: city + ', ' + country, product, total: totalStr, notes })
+    });
+    if (!res.ok) throw new Error('Worker error: ' + res.status);
     status.className = 'form-status success';
     status.innerHTML = '已成功送出！確認信將寄送至您的信箱。<br>Order submitted! A confirmation email is on its way.';
     btn.textContent = '已送出 · Submitted';
@@ -1465,7 +1463,7 @@ async function submitOrder() {
     status.innerHTML = '送出失敗，請稍後再試。<br>Submission failed. Please try again.';
     btn.disabled = false;
     btn.textContent = '送出訂單 · Submit Order';
-    console.error('EmailJS error:', err);
+    console.error('Worker error:', err);
   }
 }
 
