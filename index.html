@@ -12,7 +12,7 @@
   <meta property="og:type"        content="website">
   <meta name="twitter:card"       content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+TC:wght@400;500&family=Iansui&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@400;500&family=Iansui&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #EBEEF5; color: #1a2340; font-family: 'EB Garamond', Georgia, serif; min-height: 100vh; }
@@ -49,8 +49,8 @@
     .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
     .shop-label { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 4px; color: #C9A84C; text-transform: uppercase; margin-bottom: 30px; opacity: 0.82; }
     .hero-title { font-family: 'Iansui', 'Noto Sans TC', sans-serif; font-size: 36px; font-weight: 400; color: #f0e8d8; margin-bottom: 10px; }
-    .hero-sub { font-family: 'Noto Sans TC', sans-serif; font-size: 13px; font-weight: 300; color: #C9A84C; letter-spacing: 2px; margin-bottom: 8px; }
-    .hero-desc { font-family: 'Noto Sans TC', sans-serif; font-size: 13px; font-weight: 400; color: #c8cfe8; line-height: 2; margin-bottom: 0; }
+    .hero-sub { font-family: 'Noto Serif TC', serif; font-size: 13px; font-weight: 400; color: #C9A84C; letter-spacing: 2px; margin-bottom: 8px; }
+    .hero-desc { font-family: 'Noto Serif TC', serif; font-size: 13px; font-weight: 400; color: #c8cfe8; line-height: 2; margin-bottom: 0; }
     .hero-en { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3.5px; color: #C9A84C; text-transform: uppercase; margin-bottom: 32px; }
     .desc-break { display: none; }
     @media (max-width: 600px) {
@@ -144,14 +144,14 @@
     /* ── FAQ ── */
     .faq-section { background: #eef0f8; padding: 48px 32px; border-top: 1px solid #c0c8dc; }
     .faq-header { text-align: center; margin-bottom: 32px; }
-    .faq-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: #C9A84C; text-transform: uppercase; margin-bottom: 6px; }
+    .faq-label { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px; color: #C9A84C; text-transform: uppercase; margin-bottom: 6px; }
     .faq-list { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; }
     .faq-item { border-bottom: 1px solid #c0c8dc; }
     .faq-item:first-child { border-top: 1px solid #c0c8dc; }
-    .faq-q { width: 100%; text-align: left; padding: 16px 4px; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Noto Sans TC', sans-serif; font-size: 13px; color: #1e2d4a; font-weight: 500; gap: 12px; }
+    .faq-q { width: 100%; text-align: left; padding: 16px 4px; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Noto Serif TC', serif; font-size: 13px; color: #1e2d4a; font-weight: 500; gap: 12px; }
     .faq-q-icon { font-size: 16px; color: #C9A84C; flex-shrink: 0; transition: transform .2s; }
     .faq-item.open .faq-q-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 4px 16px; font-size: 13px; color: #4a5878; line-height: 1.85; }
+    .faq-a { display: none; padding: 0 4px 16px; font-family: 'Noto Serif TC', serif; font-size: 13px; color: #4a5878; line-height: 2; }
     .faq-item.open .faq-a { display: block; }
 
     /* ── About ── */
@@ -340,7 +340,7 @@
     <div class="nav-dropdown">
       <button class="nav-link">產品 ▾</button>
       <div class="nav-dropdown-menu">
-        <a class="nav-dropdown-item" href="#transit">行運系列</a>
+        <a class="nav-dropdown-item" href="#transit">行運甘特圖系列</a>
         <a class="nav-dropdown-item" href="#solar-return">太陽回歸系列</a>
         <a class="nav-dropdown-item" href="#fixed-star">恆星相位</a>
         <a class="nav-dropdown-item" href="#eclipse">日月食系列</a>
@@ -358,7 +358,7 @@
 </nav>
 
 <div class="nav-mobile-menu" id="mobileMenu">
-  <a class="nav-mobile-item" href="#transit" onclick="closeMobileMenu()">行運系列</a>
+  <a class="nav-mobile-item" href="#transit" onclick="closeMobileMenu()">行運甘特圖系列</a>
   <a class="nav-mobile-item" href="#solar-return" onclick="closeMobileMenu()">太陽回歸系列</a>
   <a class="nav-mobile-item" href="#fixed-star" onclick="closeMobileMenu()">恆星相位</a>
   <a class="nav-mobile-item" href="#eclipse" onclick="closeMobileMenu()">日月食系列</a>
@@ -413,7 +413,7 @@
 <!-- 1. 行運甘特圖：外行星 → 本命 → 年度 -->
 <section class="section" id="transit">
   <div class="cat-header"><div class="cat-line"></div><div class="cat-title">Transit Gantt Charts</div><div class="cat-line"></div></div>
-  <p class="cat-zh">行運甘特圖</p>
+  <p class="cat-zh">行運甘特圖系列</p>
   <div class="grid">
 
     <div class="card">
@@ -442,7 +442,7 @@
       <div class="card-icon">☿</div>
       <div class="card-zh">年度行運 ✦ 四視角甘特圖</div>
       <div class="card-en">Annual Transits<br>Four-Perspective Gantt</div>
-      <div class="card-desc">5 / 10 / 15-year packages. Four interpretive angles in one workbook.</div>
+      <div class="card-desc">5 / 10 / 15-year packages. Four interpretive perspectives in one workbook.</div>
       <div class="card-actions">
         <button class="card-btn" onclick="openLB('年')">預覽截圖 ↗</button>
         <div class="card-price">
