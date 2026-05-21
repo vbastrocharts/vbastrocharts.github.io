@@ -1,0 +1,13 @@
+<svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#243358"/>
+      <stop offset="1" stop-color="#11182f"/>
+    </linearGradient>
+  </defs>
+  <rect width="180" height="180" fill="url(#bg)"/>
+  <text x="90" y="128" text-anchor="middle"
+        font-family="Cinzel, serif"
+        font-size="115" font-weight="700" fill="#C9A84C"
+        letter-spacing="-2">V</text>
+</svg>

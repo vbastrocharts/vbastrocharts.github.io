@@ -11,6 +11,14 @@
   <meta property="og:url"         content="https://vbastrocharts.com">
   <meta property="og:type"        content="website">
   <meta name="twitter:card"       content="summary_large_image">
+
+  <!-- Favicon & Apple Touch Icon -->
+  <link rel="icon"             type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon"             type="image/png"     sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon"             type="image/png"     sizes="16x16" href="/favicon-16x16.png">
+  <link rel="shortcut icon"    href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@400;500&family=Iansui&display=swap" rel="stylesheet">
   <style>
@@ -158,11 +166,13 @@
     .about-section { background: #0b1020; padding: 56px 32px; border-top: 1px solid #C9A84C33; }
     .about-inner { max-width: 600px; margin: 0 auto; }
     .about-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: #C9A84C; text-transform: uppercase; text-align: center; margin-bottom: 32px; opacity: .85; }
+    .about-mark { width: 84px; height: 84px; margin: 0 auto 36px; border-radius: 18px; overflow: hidden; box-shadow: 0 12px 28px -8px rgba(0,0,0,.6), 0 0 0 1px rgba(201,168,76,0.2); }
+    .about-mark svg { display: block; width: 100%; height: 100%; }
     .about-text { font-size: 15px; line-height: 2.05; color: #c8cfe8; text-align: justify; margin-bottom: 18px; }
     .about-text:last-child { margin-bottom: 0; }
     .about-sig { margin-top: 32px; padding-top: 24px; border-top: 1px solid #C9A84C33; display: flex; align-items: center; gap: 14px; }
     .about-sig-line { flex: 1; height: 1px; background: #C9A84C22; }
-    .about-sig-text { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: #C9A84C88; white-space: nowrap; }
+    .about-sig-text { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; color: #C9A84C; white-space: nowrap; }
 
     /* ── Contact ── */
     .contact-section { background: #f4f6fb; padding: 36px 32px; border-top: 1px solid #c0c8dc; text-align: center; }
@@ -712,7 +722,41 @@
 
 <section class="about-section" id="about">
   <div class="about-inner">
-    <p class="about-label">About · 關於製作者</p>
+    <p class="about-label">About Me · 關於製作者</p>
+
+    <!-- 雕版襯線 V 品牌印記 -->
+    <div class="about-mark" aria-hidden="true">
+      <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="aboutMarkBg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#243358"/>
+            <stop offset="1" stop-color="#11182f"/>
+          </linearGradient>
+        </defs>
+        <rect width="180" height="180" rx="36" fill="url(#aboutMarkBg)"/>
+        <!-- 上下金線 -->
+        <line x1="28" y1="42" x2="152" y2="42" stroke="#C9A84C" stroke-width="0.8"/>
+        <line x1="28" y1="44.5" x2="152" y2="44.5" stroke="#C9A84C" stroke-width="0.4" opacity=".6"/>
+        <line x1="28" y1="138" x2="152" y2="138" stroke="#C9A84C" stroke-width="0.4" opacity=".6"/>
+        <line x1="28" y1="140.5" x2="152" y2="140.5" stroke="#C9A84C" stroke-width="0.8"/>
+        <!-- 中心菱形小裝飾 -->
+        <g fill="#C9A84C">
+          <polygon points="90,38 92,42 90,46 88,42"/>
+          <polygon points="90,135 92,140 90,145 88,140"/>
+        </g>
+        <!-- Cinzel V -->
+        <text x="90" y="118" text-anchor="middle"
+              font-family="Cinzel, serif"
+              font-size="90" font-weight="700" fill="#C9A84C"
+              letter-spacing="-2">V</text>
+        <!-- 底部小字 -->
+        <text x="90" y="155" text-anchor="middle"
+              font-family="Cinzel, serif"
+              font-size="7" font-weight="500" fill="#C9A84C"
+              letter-spacing="3" opacity=".75">ASTRO</text>
+      </svg>
+    </div>
+
     <p class="about-text">歡迎來到 VBAstroCharts。</p>
     <p class="about-text">我是一位製作客製化占星檔案的設計者，長期以 Excel VBA 與天文曆資料為基礎，親自計算並整理每一份星盤資訊。</p>
     <p class="about-text">隨著年歲增長，我愈來愈相信：一份作品真正能留下來的原因，是它清楚、耐看、實用——能在人生不同階段重新翻閱時，依然讓人感到可靠。</p>
